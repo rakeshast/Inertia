@@ -1,9 +1,6 @@
 <template>
 
-        <Head>
-            <title>Profile - My App</title>
-            <meta name="description" content="Your page description Profile">
-        </Head>
+      
     <h1 class="text-4xl mb-3 font-bold">Profile</h1>
     <p>In this Tutorial, We will learn about :</p>
 
@@ -16,18 +13,14 @@
 
 <script>
 
-import { Head } from "@inertiajs/inertia-vue3";
-// import Layout1 from "../Shared/Layout1";
+import Layout1 from "../Shared/Layout1";
 
 // defineProps({
 //     time: String
 // });
 
 export default {
-    // layout : Layout1,
-    components :{
-        Head
-    }
+    layout : Layout1,
 };
 
 </script>

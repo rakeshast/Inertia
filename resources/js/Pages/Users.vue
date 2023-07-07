@@ -1,35 +1,74 @@
 <template>
-        <Head>
-            <title>Users - My App</title>
-            <meta name="description" content="Your page description Users">
-        </Head>
-    <h1 class="text-4xl mb-3 font-bold">Users</h1>
-    <p>In this Tutorial, We will learn about :</p>
-    <div style="margin-top:400px">
-        <p>Current time of Now : {{ time }}.</p>
-        <Link href="/users" class="text-blue-500" preserve-scroll >Refresh</Link>
+    <Head>
+        <title>Users</title>
+        <meta name="description" content="Your page description Users" head-key="description">
+    </Head>
+
+    <div class="flex justify-between mt-6">
+        <h1 class="text-3xl font-bold">Users</h1>
+        <input v-model="search" type="text" placeholder="Search.." class="border px-2 rounded-lg"/>
     </div>
-   
-</template>
 
-<script>
+    <div class="flex flex-col mt-5">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
 
-import { Head } from "@inertiajs/inertia-vue3";
-// import Layout1 from "../Shared/Layout1";
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-4 whitespace-nowrap text-left" >Name</th>
+                                <th class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium" ><span class="t">Action</span></th>
+                            </tr>
+                        </thead>
 
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr v-for="user in users.data" :key="user.id" >
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">
+                                            {{user.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
 
-// // defineProps({
-// //     time: String
-// // });
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <Link :href="`/users/${user.id}/edit`" class="text-indigo-600 hover:text-indigo-900">
+                                        Edit
+                                    </Link>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-export default {
-    props : { 
-        time : String,
-    },
-    components : {
-        Head,
-    }
+    <Paginator :links="users.links" class="mt-6"/>
     
-};
+</template>
+<script setup>
+    
+    import { ref, watch } from 'vue';
+    import Paginator from '../Shared/Paginator.vue';
+    import { Inertia } from '@inertiajs/inertia';
+
+    let props = defineProps({
+        users: Object,
+        filters : Object
+    });
+
+    let search = ref(props.filters.search);
+    
+    watch(search, value => {
+        // console.log('Changed :- ' + value);
+        Inertia.get( '/users', { search: value }, {
+            preserveState: true,
+            replace: true
+        });
+    })
 
 </script>

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -28,9 +31,22 @@ Route::get('/', function () {
 });
 
 Route::get('/users', function () {
-    sleep(1);
+    // sleep(1);
+    // return User::paginate(10);
+
     return Inertia::render('Users', [
-        'time' => now()->toTimeString(),
+        
+        'users' => User::query()
+        ->when(request('search'), function ( $query, $search ) {
+            $query->where('name', 'like', "%{$search}%" );
+        })
+        ->paginate(10)
+        ->withQueryString()
+        ->through(fn($user)=>[
+            'name' => $user->name,
+            'id' => $user->id
+        ]),
+        'filters' => request(['search']),
     ]);
 });
 

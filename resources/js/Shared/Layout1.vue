@@ -1,5 +1,8 @@
 <template>
-
+    <Head>
+        <title>My App</title>
+        <meta name="description" content="Your page description Layout" head-key="description">
+    </Head>
     <section class="p-6 bg-gray-200">
         <header class="flex justify-between">
             <div class="flex item-center">
