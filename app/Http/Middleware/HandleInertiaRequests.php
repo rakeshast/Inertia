@@ -38,6 +38,17 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             //
+            'time' => now()->toTimeString(),
+            'auth' => [
+                'user' => [
+                    'username' => "Rakesh"
+                ],
+            ],
+            'profile' => [
+                'userprofile' => [
+                    'address' => "Nagpur"
+                ],
+            ],
         ]);
     }
 }

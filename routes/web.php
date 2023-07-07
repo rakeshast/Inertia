@@ -43,5 +43,9 @@ Route::post('/logout', function () {
     // dd( "Logout page showing");
 }); 
 
+Route::get('/profile', function () {
+    return Inertia::render('Profile');
+}); 
+
 
 
