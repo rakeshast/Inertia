@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -40,9 +41,10 @@ class HandleInertiaRequests extends Middleware
             //
             'time' => now()->toTimeString(),
             'auth' => [
-                'user' => [
-                    'username' => "Rakesh"
-                ],
+                'user' => Auth::user() ? [
+                    // 'username' => "Rakesh"
+                    'username' => Auth::user()->name,
+                ] : null ,
             ],
             'profile' => [
                 'userprofile' => [

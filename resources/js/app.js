@@ -7,9 +7,13 @@ createInertiaApp({
   resolve: async name => {
     let page = require(`./Pages/${name}`).default;
 
-    if (! page.layout) {
-        page.layout = Layout;
+    if ( page.layout === undefined ) {
+      page.layout = Layout;
     }
+
+    // if (! page.layout) {
+    //     page.layout = Layout;
+    // }
 
     // page.layout ??= Layout;
 

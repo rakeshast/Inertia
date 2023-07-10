@@ -24,7 +24,9 @@
                 <NavLink href="/profile" :active="$page.component == 'Profile'">Profile</NavLink>
             </li>
 
-            <li><Link href="/logout" method="post" :data="{ foo: 'Bar'}" as="button" class="text-blue-500 hover:underline" :class="{'font-bold underline' : $page.url == '/logout'}">Logout</Link></li>
+            <!-- <li><Link href="/logout" method="post" :data="{ foo: 'Bar'}" as="button" class="text-blue-500 hover:underline" :class="{'font-bold underline' : $page.url == '/logout'}">Logout</Link></li> -->
+
+            <li><Link href="/logout" method="post">Logout</Link></li>
            
         </ul>
     </nav>
