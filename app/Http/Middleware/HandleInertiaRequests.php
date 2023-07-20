@@ -51,6 +51,10 @@ class HandleInertiaRequests extends Middleware
                     'address' => "Nagpur"
                 ],
             ],
+            'flash' => [
+                'status' => session('status'),
+                'message' => session('message')
+            ]
         ]);
     }
 }

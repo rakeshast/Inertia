@@ -41,11 +41,11 @@ Route::middleware('auth')->group(function() {
         return Inertia::render('Home');
     });
     
-    Route::get('/users', function () {
+    Route::get('/users', function () { 
         // sleep(1);
-        // return User::paginate(10);
+        // return User::paginate(10);sdf
     
-        return Inertia::render('Users/Index', [
+        return Inertia::render('Users/Index', [ 
             
             'users' => User::query()
             ->when(request('search'), function ( $query, $search ) {
@@ -59,13 +59,13 @@ Route::middleware('auth')->group(function() {
             ]),
             'filters' => request(['search']),
         ]);
-    });
+    })->name('users');
     
     Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
     });
     
-    
+    //Create a new user
     Route::post('/users', function (Request $request) {
         // sleep(3);
         $validated = $request->validate([
@@ -76,10 +76,64 @@ Route::middleware('auth')->group(function() {
     
         User::create($validated);
     
-        return redirect('users');
+        // return redirect('users');
+        // return redirect()->route('users')->with(['message' => 'New User Created Successfully', 'status' => true ]);
+        return Redirect::back()->with( ['status' => true, 'message' => 'New User Created Successfully'] );
+        
     
     });
     
+    //Edit User
+    Route::get('/users/edit/{id}', function(Request $request){
+        
+        $userData = User::select('id', 'name', 'email')->where('id','=',$request->id)->get();
+        
+        $data = [            
+            'id' => $userData[0]->id,
+            'name' => $userData[0]->name,
+            'email' => $userData[0]->email,                   
+        ];
+       
+        // $userData = User::find($request->id, ['name']);
+        return Inertia::render('Users/Edit', ['data' => $data]);
+    })->name('userUpdate');
+
+    
+    //Update user
+    Route::post('/users/update', function(Request $request){
+        
+        $userId = $request->id;
+        $validated = $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'email' => ['required', 'email', 'unique:users'],
+        ]);
+        $user = User::find($userId);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->update();
+
+        // return redirect()->route('users')->with('message', 'User Updated Successfully');
+        return Redirect::back()->with( ['status' => true, 'message' => 'User Updated Successfully'] );
+        
+        
+    });
+
+    
+    Route::delete('/users/delete/{id}', function(Request $request, $id){
+
+        // User::find($id)->delete();
+        $data = User::find($id)->delete();
+        if ($data) {
+            return Redirect::back()->with( ['status' => true, 'message' => 'User Deleted Successfully'] );
+        }else{
+            return Redirect::back()->with( ['status' => false, 'message' => 'Internal server error'] );
+        }
+
+    });
+  
+
     Route::get('/settings', function () {
         return Inertia::render('Settings');
     }); 

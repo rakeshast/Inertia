@@ -39,9 +39,12 @@
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <Link :href="`/users/${user.id}/edit`" class="text-indigo-600 hover:text-indigo-900">
+                                    <Link :href="`/users/edit/${user.id}`" class="text-indigo-600 hover:text-indigo-900">
                                         Edit
                                     </Link>
+                                    /
+ <Link :href="`/users/delete/${user.id}`" as="button" method="DELETE" class="btn btn-blue"  > Delete </Link>
+                                    
                                 </td>
                             </tr>
                         </tbody>
@@ -78,6 +81,17 @@
         });
     }, 300 ) );
 
+    // let destroyuser = (id) => {
+    //     // console.log(id);
+    //     // Inertia(route("destroyde", id));
+    //     if (confirm("Are you sure you want to Delete")) {
+    //         Inertia.delete(route("destroyde", id));
+    //         console.log(id);
+    //     }
+    // }
+
+
+
     // watch(search, value => {
     //     // console.log('Changed :- ' + value);
     //     Inertia.get( '/users', { search: value }, {
@@ -87,3 +101,4 @@
     // });
 
 </script>
+

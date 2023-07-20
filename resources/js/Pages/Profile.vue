@@ -13,14 +13,14 @@
 
 <script>
 
-import Layout1 from "../Shared/Layout1";
+import FrontLayout from "../Shared/FrontLayout";
 
 // defineProps({
 //     time: String
 // });
 
 export default {
-    layout : Layout1,
+    layout : FrontLayout,
 };
 
 </script>

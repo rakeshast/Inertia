@@ -9,6 +9,7 @@
     </div>
 
     <form @submit.prevent="submit" class="max-w-md mx-auto mt-8">
+        
         <div class="mb-6">
             <label for="name" class="block mb-2 uppercase font-bold text-xs text-gray-700">Name</label>
             <input v-model="form.name" type="text" class="border border-gray-400 p-2 w-full" name="name" id="name" placeholder="Name" />
